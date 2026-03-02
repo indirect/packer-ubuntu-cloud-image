@@ -23,7 +23,7 @@ source "qemu" "ubuntu" {
   iso_checksum     = "file:https://cloud-images.ubuntu.com/${var.ubuntu_version}/current/SHA256SUMS"
   iso_url          = "https://cloud-images.ubuntu.com/${var.ubuntu_version}/current/${var.ubuntu_version}-server-cloudimg-amd64.img"
   output_directory = "output-${var.ubuntu_version}"
-  shutdown_command = "echo 'packer' | sudo -S shutdown -P now"
+  shutdown_command = "sudo shutdown -P now"
   ssh_password     = "ubuntu"
   ssh_username     = "ubuntu"
   vm_name          = "ubuntu-${var.ubuntu_version}.img"
@@ -38,8 +38,7 @@ build {
   sources = ["source.qemu.ubuntu"]
 
   provisioner "shell" {
-    // run scripts with sudo, as the default cloud image user is unprivileged
-    execute_command = "echo 'packer' | sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
+    execute_command = "sudo sh -c '{{ .Vars }} {{ .Path }}'"
     // NOTE: cleanup.sh should always be run last, as this performs post-install cleanup tasks
     scripts = [
       "scripts/install.sh",
@@ -66,7 +65,8 @@ build {
       "find /var/log -type f -exec rm {} +",
       "rm -r /tmp/* /tmp/.*-unix /var/tmp/*",
       "/bin/sync",
-      "/sbin/fstrim -v /"]
+      "/sbin/fstrim -v /"
+    ]
     remote_folder   = "/tmp"
     valid_exit_codes = [0, 1]
   }

@@ -7,12 +7,6 @@ packer {
   }
 }
 
-variable "qemu_accelerator" {
-  type        = string
-  default     = "kvm"
-  description = "Qemu accelerator to use. On Linux use kvm and macOS use hvf."
-}
-
 variable "ubuntu_version" {
   type        = string
   default     = "jammy"
@@ -20,7 +14,6 @@ variable "ubuntu_version" {
 }
 
 source "qemu" "ubuntu" {
-  accelerator      = var.qemu_accelerator
   cd_files         = ["./cloud-init/*"]
   cd_label         = "cidata"
   disk_compression = true

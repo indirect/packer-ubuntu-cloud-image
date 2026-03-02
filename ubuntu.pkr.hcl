@@ -23,7 +23,7 @@ source "qemu" "ubuntu" {
   iso_checksum     = "file:https://cloud-images.ubuntu.com/${var.ubuntu_version}/current/SHA256SUMS"
   iso_url          = "https://cloud-images.ubuntu.com/${var.ubuntu_version}/current/${var.ubuntu_version}-server-cloudimg-amd64.img"
   output_directory = "output-${var.ubuntu_version}"
-  shutdown_command = "sudo shutdown -P now"
+  shutdown_command = "echo 'ubuntu' | sudo -S shutdown -P now"
   ssh_password     = "ubuntu"
   ssh_username     = "ubuntu"
   vm_name          = "ubuntu-${var.ubuntu_version}.img"

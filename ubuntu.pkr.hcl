@@ -68,5 +68,6 @@ build {
       "/bin/sync",
       "/sbin/fstrim -v /"]
     remote_folder   = "/tmp"
+    valid_exit_codes = [0, 1]
   }
 }

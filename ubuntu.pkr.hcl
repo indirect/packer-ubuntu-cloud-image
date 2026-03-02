@@ -9,7 +9,7 @@ packer {
 
 variable "ubuntu_version" {
   type        = string
-  default     = "jammy"
+  default     = "noble"
   description = "Ubuntu codename version (i.e. 20.04 is focal and 22.04 is jammy)"
 }
 
